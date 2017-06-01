@@ -52,7 +52,7 @@ const usersArray = [
 	"firstName": "Юлия",
 	"lastName": "Комаричева",
 	"photo": ".gif",
-	"innerNumber": "5-09",
+	"innerNumber": "5-25",
 	"mobileNumber": "+38(067) 620-10-51"
 },
 {

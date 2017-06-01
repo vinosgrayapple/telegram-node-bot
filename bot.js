@@ -10,7 +10,7 @@ class PingController extends TelegramBaseController {
      * @param {Scope} $
      */
     pingHandler($) {
-        $.sendMessage('pong')
+        $.sendMessage('Комаричев внутренний номер 633')
     }
 
     get routes() {
@@ -24,7 +24,7 @@ class StartContoller extends TelegramBaseController {
      * @param {Scope} $
      */
     start($) {
-        $.sendMessage('Hello!')
+        $.sendMessage('Комаричев внутренний номер 633')
     }
 
     get routes() {
@@ -36,13 +36,13 @@ class StartContoller extends TelegramBaseController {
 
 class OtherwiseController extends TelegramBaseController {
     handle($) {
-        $.sendMessage(`Комаричев Сергей:      тел. 523`)
+        $.sendMessage(`http://archakov.im/post/telegram-bot-on-nodejs.html`)
     }
 }
 
 tg.router
     .when(
-        new TextCommand('ping', 'pingCommand'),
+        new TextCommand('Комаричев', 'pingCommand'),
         new PingController()
     )
     .when(
