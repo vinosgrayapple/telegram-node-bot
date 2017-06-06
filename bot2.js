@@ -34,7 +34,7 @@ bot.onText(/(.+)/, (msg, match) => {
 
     filteredUser = usersArray.filter(user => user.lastName.toUpperCase().includes(resp.toUpperCase()));
     // console.log(filteredUser.length);
-	if (!filteredUser.length) {bot.sendMessage(chatId,"_По данному запросу записи в_ *базе отсутствуют*!", { "parse_mode": "Markdown" })}
+	if (!filteredUser.length) {bot.sendMessage(chatId,"_По вашему запросу ничего не найдено_!", { "parse_mode": "Markdown" })}
     filteredUser.map(
         (user) => {
             const msgForSend = `_ ${user.lastName.toUpperCase()} ${user.firstName.toUpperCase()} _ :  
@@ -69,6 +69,13 @@ bot.onText(/\/help/, (msg, match) => {
 
 	`;
     bot.sendMessage(chatId, msgForSend, { "parse_mode": "Markdown" });
+});
+
+bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
+  if (whiteList.indexOf(chatId) == -1) {
+  	bot.sendMessage(chatId, 'Обратитесь к Администратору!');
+  }
 });
 
 console.log('Bot starting....')
