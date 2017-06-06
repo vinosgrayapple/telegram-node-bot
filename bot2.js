@@ -29,13 +29,12 @@ bot.onText(/(.+)/, (msg, match) => {
     if (whiteList.indexOf(chatId) == -1) return;
 
     console.log("chatId", chatId, "  ", (new Date()).toString().split(' ')[4]);
-    if (whiteList.indexOf(chatId) == -1) return;
-
-
+ 
     const resp = match[1].replace(/\s/g, '');
 
     filteredUser = usersArray.filter(user => user.lastName.toUpperCase().includes(resp.toUpperCase()));
-
+    // console.log(filteredUser.length);
+	if (!filteredUser.length) {bot.sendMessage(chatId,"_По данному запросу записи в_ *базе отсутствуют*!", { "parse_mode": "Markdown" })}
     filteredUser.map(
         (user) => {
             const msgForSend = `_ ${user.lastName.toUpperCase()} ${user.firstName.toUpperCase()} _ :  
