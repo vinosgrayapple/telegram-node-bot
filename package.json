@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon bot2.js",
+    "start": "node bot2.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "node-telegram-bot-api": "^0.27.1",
+    "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "telegram-node-bot": "^4.0.5"
   }
