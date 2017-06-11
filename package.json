@@ -1,8 +1,7 @@
 {
   "name": "ArtWineryBot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "bot2.js",
   "scripts": {
     "dev": "nodemon bot2.js",
     "start": "node bot2.js"
@@ -15,5 +14,20 @@
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "telegram-node-bot": "^4.0.5"
-  }
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.27.1",
+  },
+  "engines": {
+    "node": "6.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinosgrayapple/telegram-node-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vinosgrayapple/telegram-node-bot/issues"
+  },
+  "homepage": "https://github.com/vinosgrayapple/telegram-node-bot#readme",
+  "description": ""
 }

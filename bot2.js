@@ -11,8 +11,12 @@ const token = '388795002:AAE1UCy5COY_cOFeLSo0dFFJIlkU7mgkr4w';
 const bot = new TelegramBot(token, { polling: true });
 
 // Get password
-bot.onText(/\/pass (.+)/, (msg, match) => {
+bot.onText(/^\/pass (parabellum)/, (msg, match) => {
     const chatId = msg.chat.id;
+    if (whiteList.indexOf(chatId) !== -1) {
+     bot.sendMessage(chatId, "Вы уже зарегестрированы!")
+    return;
+    }
     const resp = match[1];
     if (resp === password) {
         const dataToWrite = idTXT.slice(0, idTXT.length - 1) + ',' + chatId + ']';
@@ -24,7 +28,7 @@ bot.onText(/\/pass (.+)/, (msg, match) => {
 });
 
 // Search for lastName
-bot.onText(/(.+)/, (msg, match) => {
+bot.onText(/^([^\/].+)/, (msg, match) => {
     const chatId = msg.chat.id;
     if (whiteList.indexOf(chatId) == -1) return;
 
