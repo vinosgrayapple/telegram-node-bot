@@ -2,7 +2,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 const fs = require('fs');
 
-const usersArray = JSON.parse(fs.readFileSync('./db.json')).json;
+let usersArray = JSON.parse(fs.readFileSync('./db.json')).json;
+    usersArray = usersArray.slice().sort(compareLastName);
 const idTXT = fs.readFileSync('./id.json', 'utf-8');
 const whiteList = JSON.parse(idTXT);
 const password = 'parabellum';
@@ -10,8 +11,17 @@ const token = '388795002:AAE1UCy5COY_cOFeLSo0dFFJIlkU7mgkr4w';
 
 const bot = new TelegramBot(token, { polling: true });
 
+// function compareLastName
+function compareLastName (a,b)  {
+    const aln = a.lastName.toLowerCase(); const bln = b.lastName.toLowerCase();
+    if (aln > bln) return  1;
+    if (aln < bln) return -1;
+    return 0
+}
+
+
 // Get password
-bot.onText(/^\/pass (parabellum)/, (msg, match) => {
+bot.onText(/^\/pass (.+)/, (msg, match) => {
     const chatId = msg.chat.id;
     if (whiteList.indexOf(chatId) !== -1) {
      bot.sendMessage(chatId, "Вы уже зарегестрированы!")
@@ -41,8 +51,9 @@ bot.onText(/^([^\/].+)/, (msg, match) => {
 	if (!filteredUser.length) {bot.sendMessage(chatId,"_По вашему запросу ничего не найдено_!", { "parse_mode": "Markdown" })}
     filteredUser.map(
         (user) => {
+            const mobileNumbers = user.mobileNumber.reduce((a,b)=>a + ` 📱 *${b}* `,'');
             const msgForSend = `_ ${user.lastName.toUpperCase()} ${user.firstName.toUpperCase()} _ :  
-								 📱 *${user.mobileNumber}*   (☎️ *${user.innerNumber}*)`;
+								 ${mobileNumbers}   (☎️ *${user.innerNumber}*)`;
             bot.sendMessage(chatId, msgForSend, { "parse_mode": "Markdown" });
         }
 
@@ -51,14 +62,20 @@ bot.onText(/^([^\/].+)/, (msg, match) => {
 });
 
 // Get all User
-bot.onText(/\/inall/, (msg, match) => {
-    const chatId = msg.chat.id;
-    if (whiteList.indexOf(chatId) == -1) return;
+// bot.onText(/\/inall/, (msg, match) => {
+//     const chatId = msg.chat.id;
+//     if (whiteList.indexOf(chatId) == -1) return;
 
-    msgForSend = usersArray.reduce((concat, user) => concat + `_ ${user.lastName.toUpperCase()} ${user.firstName.toUpperCase()} _ : ☎️ *${user.innerNumber}*  📱 *${user.mobileNumber}* \n\n`,
-        ``);
-    bot.sendMessage(chatId, msgForSend, { "parse_mode": "Markdown" });
-});
+//     msgForSend = usersArray.reduce((concat, user, index, array) => {
+//         const mobileNumbers = user.mobileNumber.reduce((a,b)=>a + ` 📱 *${b}* `,'');
+//         if (!(index+1)%10) {
+//         bot.sendMessage(chatId, concat, { "parse_mode": "Markdown" });    
+//         }
+//       return  concat + `_ ${user.lastName.toUpperCase()} ${user.firstName.toUpperCase()} _ : ☎️ *${user.innerNumber}*  ${mobileNumbers} \n\n`
+    
+//     }, ``);
+//     // bot.sendMessage(chatId, msgForSend, { "parse_mode": "Markdown" });
+// });
 
 // Get HELP
 bot.onText(/\/help/, (msg, match) => {
